@@ -21,11 +21,11 @@ given_config.out_dir = os.path.join(given_config.out_root,
 reloaded_config_path = os.path.join(given_config.out_dir, "config.pickle")
 print("Loading restarting config from: %s" % reloaded_config_path)
 with open(reloaded_config_path, "rb") as config_f:
-  config = pickle.load(config_f)
+    config = pickle.load(config_f)
 assert (config.model_ind == given_config.model_ind)
 
 if not hasattr(config, "twohead"):
-  config.twohead = ("TwoHead" in config.arch)
+    config.twohead = ("TwoHead" in config.arch)
 
 config.double_eval = False  # no double eval, not training (or saving config)
 
@@ -38,12 +38,12 @@ net = torch.nn.DataParallel(net)
 
 dataloaders_head_A, dataloaders_head_B, \
 mapping_assignment_dataloader, mapping_test_dataloader = \
-  cluster_twohead_create_dataloaders(config)
+    cluster_twohead_create_dataloaders(config)
 
 if "MNIST" in config.dataset:
-  sobel = False
+    sobel = False
 else:
-  sobel = True
+    sobel = True
 
 cluster_eval(config, net,
              mapping_assignment_dataloader=mapping_assignment_dataloader,
