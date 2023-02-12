@@ -139,37 +139,37 @@ if not os.path.exists(config.out_dir):
     os.makedirs(config.out_dir)
 
 if config.restart:
-  config_name = "config.pickle"
-  net_name = "latest_net.pytorch"
-  opt_name = "latest_optimiser.pytorch"
+    config_name = "config.pickle"
+    net_name = "latest_net.pytorch"
+    opt_name = "latest_optimiser.pytorch"
 
-  if config.restart_from_best:
-    config_name = "best_config.pickle"
-    net_name = "best_net.pytorch"
-    opt_name = "best_optimiser.pytorch"
+    if config.restart_from_best:
+        config_name = "best_config.pickle"
+        net_name = "best_net.pytorch"
+        opt_name = "best_optimiser.pytorch"
 
-  given_config = config
-  reloaded_config_path = os.path.join(given_config.out_dir, config_name)
-  print("Loading restarting config from: %s" % reloaded_config_path)
-  with open(reloaded_config_path, "rb") as config_f:
-    config = pickle.load(config_f)
-  assert (config.model_ind == given_config.model_ind)
-  config.restart = True
+    given_config = config
+    reloaded_config_path = os.path.join(given_config.out_dir, config_name)
+    print("Loading restarting config from: %s" % reloaded_config_path)
+    with open(reloaded_config_path, "rb") as config_f:
+        config = pickle.load(config_f)
+    assert (config.model_ind == given_config.model_ind)
+    config.restart = True
 
-  # copy over new num_epochs and lr schedule
-  config.num_epochs = given_config.num_epochs
-  config.lr_schedule = given_config.lr_schedule
-  config.save_progression = given_config.save_progression
+    # copy over new num_epochs and lr schedule
+    config.num_epochs = given_config.num_epochs
+    config.lr_schedule = given_config.lr_schedule
+    config.save_progression = given_config.save_progression
 
-  if not hasattr(config, "batchnorm_track"):
-    config.batchnorm_track = True  # before we added in false option
+    if not hasattr(config, "batchnorm_track"):
+        config.batchnorm_track = True  # before we added in false option
 
-  if not hasattr(config, "lamb_A"):
-    config.lamb_A = config.lamb
-    config.lamb_B = config.lamb
+    if not hasattr(config, "lamb_A"):
+        config.lamb_A = config.lamb
+        config.lamb_B = config.lamb
 
 else:
-  print("Config: %s" % config_to_str(config))
+    print("Config: %s" % config_to_str(config))
 
 
 # Model ------------------------------------------------------------------------
@@ -279,7 +279,7 @@ def train(render_count=-1):
     # Train
     # ------------------------------------------------------------------------
 
-    for e_i in xrange(next_epoch, config.num_epochs):
+    for e_i in range(next_epoch, config.num_epochs):
         print("Starting e_i: %d" % e_i)
 
         if e_i in config.lr_schedule:
@@ -320,7 +320,7 @@ def train(render_count=-1):
 
             imgs_curr = tup[0][0]  # always the first
             curr_batch_sz = imgs_curr.size(0)
-            for d_i in xrange(config.num_dataloaders):
+            for d_i in range(config.num_dataloaders):
                 imgs_tf_curr = tup[1 + d_i][0]  # from 2nd to last
                 assert (curr_batch_sz == imgs_tf_curr.size(0))
 
@@ -344,7 +344,7 @@ def train(render_count=-1):
 
             avg_loss_batch = None  # avg over the heads
             avg_loss_no_lamb_batch = None
-            for i in xrange(config.num_sub_heads):
+            for i in range(config.num_sub_heads):
                 loss, loss_no_lamb = IID_loss(x_outs[i], x_tf_outs[i],
                                             lamb=lamb)
                 if avg_loss_batch is None:

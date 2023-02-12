@@ -110,23 +110,23 @@ for tup in itertools.izip(*iterators):
 
     with open(results_f, "w") as f:
         for i, img_i in enumerate(img_inds):
-        img = orig_imgs[img_i].numpy()
-        img = img[:3]
-        img = img.transpose((1, 2, 0))  # channels last
-        img *= 255.
+            img = orig_imgs[img_i].numpy()
+            img = img[:3]
+            img = img.transpose((1, 2, 0))  # channels last
+            img *= 255.
 
-        print(img.shape)
-        print(img.max())
-        print(img.min())
+            print(img.shape)
+            print(img.max())
+            print(img.min())
 
-        img = Image.fromarray(img.astype(np.uint8))
-        img.save(os.path.join(render_out_dir, "%d.png" % i))
+            img = Image.fromarray(img.astype(np.uint8))
+            img.save(os.path.join(render_out_dir, "%d.png" % i))
 
-        f.write("(%d) %d %d %d\n" % (i,
-                                    best_match_dict[
-                                        flat_preds_curr[img_i].item()],
-                                    flat_targets[img_i].item(),
-                                    flat_preds_curr[img_i].item()))
+            f.write("(%d) %d %d %d\n" % (i,
+                                        best_match_dict[
+                                            flat_preds_curr[img_i].item()],
+                                        flat_targets[img_i].item(),
+                                        flat_preds_curr[img_i].item()))
 
     break
 
