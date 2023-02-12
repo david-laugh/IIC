@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# dataset
+COCOStuff164kCurated.tar.gz
+Potsdam.tar.gz
